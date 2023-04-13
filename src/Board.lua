@@ -50,52 +50,59 @@ function Board:initializeTiles(level)
     end
 end
 
-function Board:checkBoard(tile, x, y, level)
-  if self:checkForMatches(tile, x, y) then
-    return true
-  else
+function Board:checkBoard(check, level)
+  -- if self:checkForMatches(tile, x, y) then
+  --   return true
+  -- else
+  --   self:initializeTiles(level)
+  -- end
+  if not check then
     self:initializeTiles(level)
   end
 end
 
-function Board:checkForMatches(tile, x, y)
-  local dx = x - tile.gridX
-  local dy = y - tile.gridY
+function Board:checkForMatches()
 
-  if y - 1 >= 1 and y + 1 <= 8 and dy == 0 then
-      if tile.color == self.tiles[y - 1][x].color and tile.color == self.tiles[y + 1][x].color then
-          return true
-      end
-  end
+  for x = 1, 8 do
+    for y = 1, 8 do
+        local colorToMatch = self.tiles[x][y].color
 
-  if x - 1 >= 1 and x + 1 <= 8  and dx == 0 then
-      if tile.color == self.tiles[y][x - 1].color and tile.color == self.tiles[y][x + 1].color then
-          return true
-      end
-  end
+        if y - 1 >= 1 and y + 1 <= 8 then
+            if colorToMatch == self.tiles[y - 1][x].color and colorToMatch == self.tiles[y + 1][x].color then
+                return true
+            end
+        end
 
-  if y - 2 >= 1 then
-      if tile.color == self.tiles[y - 1][x].color and tile.color == self.tiles[y - 2][x].color then
-          return true
-      end
-  end
+        if x - 1 >= 1 and x + 1 <= 8 then
+            if colorToMatch == self.tiles[y][x - 1].color and colorToMatch == self.tiles[y][x + 1].color then
+                return true
+            end
+        end
 
-  if y + 2 <= 8 then
-      if tile.color == self.tiles[y + 1][x].color and tile.color == self.tiles[y + 2][x].color then
-          return true
-      end
-  end
+        if y - 2 >= 1 then
+            if colorToMatch == self.tiles[y - 1][x].color and colorToMatch == self.tiles[y - 2][x].color then
+                return true
+            end
+        end
 
-  if x - 2 >= 1 then
-      if tile.color == self.tiles[y][x - 1].color and tile.color == self.tiles[y][x - 2].color then
-          return true
-      end
-  end
+        if y + 2 <= 8 then
+            if colorToMatch == self.tiles[y + 1][x].color and colorToMatch == self.tiles[y + 2][x].color then
+                return true
+            end
+        end
 
-  if x + 2 <= 8 then
-      if tile.color == self.tiles[y][x + 1].color and tile.color == self.tiles[y][x + 2].color then
-          return true
-      end
+        if x - 2 >= 1 then
+            if colorToMatch == self.tiles[y][x - 1].color and colorToMatch == self.tiles[y][x - 2].color then
+                return true
+            end
+        end
+
+        if x + 2 <= 8 then
+            if colorToMatch == self.tiles[y][x + 1].color and colorToMatch == self.tiles[y][x + 2].color then
+                return true
+            end
+        end
+    end
   end
 
   return false

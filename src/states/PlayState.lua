@@ -170,8 +170,10 @@ function PlayState:update(dt)
                 self.highlightedTile = nil
             else
                 
-                    self.board:checkForMatches(self.highlightedTile, x, y, self.level)
-                    self.board:checkForMatches(self.board.tiles[y][x], self.highlightedTile.gridX, self.highlightedTile.gridY, self.level)
+                   -- local check1 = self.board:checkForMatches() --self.board:checkForMatches(self.highlightedTile, x, y, self.level)
+                    --local check2 = true--self.board:checkForMatches(self.board.tiles[y][x], self.highlightedTile.gridX, self.highlightedTile.gridY, self.level)
+                    --self.board:checkBoard(check1, check2, self.level)
+                    
                     -- swap grid positions of tiles
                     -- posicion actual
                     local tempX = self.highlightedTile.gridX
@@ -204,6 +206,8 @@ function PlayState:update(dt)
                     -- once the swap is finished, we can tween falling blocks as needed
                     :finish(function()
                         self:calculateMatches()
+                        local check = self.board:checkForMatches()
+                        self.board:checkBoard(check, self.level)
                     end)
             end
         end
